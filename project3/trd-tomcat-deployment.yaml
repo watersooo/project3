@@ -28,7 +28,7 @@ spec:
             matchLabels:
               app: index-app
       containers:
-        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index:v3.0
+        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index:v4.0
           name: was-main
           ports:
             - containerPort: 8080
