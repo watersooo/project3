@@ -1,15 +1,15 @@
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: trd-prd-tomindex-hpa
-  namespace: trd-backend
+  name: tomcat-index-hpa
+  namespace: backend
 spec:
   maxReplicas: 5
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: trd-prd-tomindex
+    name: was-main
   targetCPUUtilizationPercentage: 40
   
 ---
@@ -17,15 +17,15 @@ spec:
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: trd-prd-tomsign-hpa
-  namespace: trd-backend
+  name: tomcat-sign-hpa
+  namespace: backend
 spec:
   maxReplicas: 5
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: trd-prd-tomsign
+    name: was-sign
   targetCPUUtilizationPercentage: 40
   
 ---
@@ -33,29 +33,14 @@ spec:
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: trd-prd-tomlogin-hpa
-  namespace: trd-backend
+  name: tomcat-login-hpa
+  namespace: backend
 spec:
   maxReplicas: 5
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: trd-prd-tomlogin
+    name: was-login
   targetCPUUtilizationPercentage: 40
   
----
-
-apiVersion: autoscaling/v1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: trd-prd-tombook-hpa
-  namespace: trd-backend
-spec:
-  maxReplicas: 5
-  minReplicas: 2
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: trd-prd-tombook
-  targetCPUUtilizationPercentage: 40
