@@ -28,7 +28,7 @@ spec:
             matchLabels:
               app: index-app
       containers:
-        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index-rolling:v7.0
+        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index:v3.0 
           name: was-main
           ports:
             - containerPort: 8080
@@ -95,7 +95,7 @@ spec:
             matchLabels:
               app: sign-app
       containers:
-        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index-rolling:v7.0 
+        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index:v3.0  
           name: was-sign
           ports:
             - containerPort: 8080
@@ -162,7 +162,7 @@ spec:
             matchLabels:
               app: login-app
       containers:
-        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index-rolling:v7.0
+        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index:v3.0 
           name: was-login
           ports:
             - containerPort: 8080
