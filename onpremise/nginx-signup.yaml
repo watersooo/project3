@@ -18,7 +18,7 @@ spec:
       - name: ecr-secret 
       containers:
       - name: nginx
-        image: 784849575779.dkr.ecr.us-east-1.amazonaws.com/nginx-signup:v1.0                    
+        image: 784849575779.dkr.ecr.us-east-1.amazonaws.com/nginx-signup:v10.0                    
         ports:
         - containerPort: 80
         resources:
