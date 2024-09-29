@@ -38,7 +38,7 @@ spec:
             matchLabels:
               app: index-app
       containers:
-        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-index:v1.1
+        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-index:v5.0
           name: trd-index
           ports:
             - containerPort: 80
@@ -104,7 +104,7 @@ spec:
             matchLabels:
               app: sign-app
       containers:
-        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-signup:v1.0
+        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-signup:v5.0
           name: nginx-sign
           ports:
             - containerPort: 80
@@ -170,7 +170,7 @@ spec:
             matchLabels:
               app: login-app
       containers:
-        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-login:v1.0
+        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-login:v5.0
           name: nginx-login
           ports:
             - containerPort: 80
