@@ -20,17 +20,10 @@ spec:
       labels:
         app: index-app
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchLabels:
-                  app: index-app
-              topologyKey: "kubernetes.io/hostname"
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: "kubernetes.io/hostname"
-          whenUnsatisfiable: "ScheduleAnyway"  # 완화된 조건
+          whenUnsatisfiable: "DoNotSchedule"
           labelSelector:
             matchLabels:
               app: index-app
@@ -85,20 +78,10 @@ spec:
       labels:
         app: sign-app
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - sign-app
-              topologyKey: "kubernetes.io/hostname"
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: "kubernetes.io/hostname"
-          whenUnsatisfiable: "ScheduleAnyway"  # 완화된 조건
+          whenUnsatisfiable: "DoNotSchedule"
           labelSelector:
             matchLabels:
               app: sign-app
@@ -153,20 +136,10 @@ spec:
       labels:
         app: login-app
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - login-app
-              topologyKey: "kubernetes.io/hostname"
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: "kubernetes.io/hostname"
-          whenUnsatisfiable: "ScheduleAnyway"  # 완화된 조건
+          whenUnsatisfiable: "DoNotSchedule"
           labelSelector:
             matchLabels:
               app: login-app
