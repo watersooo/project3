@@ -30,7 +30,7 @@ spec:
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: "kubernetes.io/hostname"
-          whenUnsatisfiable: "DoNotSchedule"
+          whenUnsatisfiable: "ScheduleAnyway"  # 완화된 조건
           labelSelector:
             matchLabels:
               app: index-app
@@ -98,7 +98,7 @@ spec:
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: "kubernetes.io/hostname"
-          whenUnsatisfiable: "DoNotSchedule"
+          whenUnsatisfiable: "ScheduleAnyway"  # 완화된 조건
           labelSelector:
             matchLabels:
               app: sign-app
@@ -166,7 +166,7 @@ spec:
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: "kubernetes.io/hostname"
-          whenUnsatisfiable: "DoNotSchedule"
+          whenUnsatisfiable: "ScheduleAnyway"  # 완화된 조건
           labelSelector:
             matchLabels:
               app: login-app
