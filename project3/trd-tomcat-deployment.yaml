@@ -20,39 +20,49 @@ spec:
       labels:
         app: index-app
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - index-app
+            topologyKey: "kubernetes.io/hostname"
       topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: "kubernetes.io/hostname"
-          whenUnsatisfiable: "DoNotSchedule"
-          labelSelector:
-            matchLabels:
-              app: index-app
+      - maxSkew: 1
+        topologyKey: "kubernetes.io/hostname"
+        whenUnsatisfiable: "ScheduleAnyway"
+        labelSelector:
+          matchLabels:
+            app: index-app
       containers:
-        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index-rolling:v8.0
-          name: was-main
-          ports:
-            - containerPort: 8080
-          resources:
-            requests:
-              memory: 256Mi
-              cpu: 200m
-            limits:
-              memory: 256Mi
-              cpu: 200m
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 8080
-            initialDelaySeconds: 60
-            periodSeconds: 30
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 8080
-            initialDelaySeconds: 60
-            periodSeconds: 30
-            successThreshold: 1
-            failureThreshold: 5
+      - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index-rolling:v8.0
+        name: was-main
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: 256Mi
+            cpu: 200m
+          limits:
+            memory: 256Mi
+            cpu: 200m
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 30 
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 60 
+          periodSeconds: 30 
+          successThreshold: 1 
+          failureThreshold: 5 
 
 ---
 
@@ -78,39 +88,49 @@ spec:
       labels:
         app: sign-app
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - sign-app
+            topologyKey: "kubernetes.io/hostname"
       topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: "kubernetes.io/hostname"
-          whenUnsatisfiable: "DoNotSchedule"
-          labelSelector:
-            matchLabels:
-              app: sign-app
+      - maxSkew: 1
+        topologyKey: "kubernetes.io/hostname"
+        whenUnsatisfiable: "DoNotSchedule"
+        labelSelector:
+          matchLabels:
+            app: sign-app
       containers:
-        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index-rolling:v8.0
-          name: was-sign
-          ports:
-            - containerPort: 8080
-          resources:
-            requests:
-              memory: 256Mi
-              cpu: 200m
-            limits:
-              memory: 256Mi
-              cpu: 200m
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 8080
-            initialDelaySeconds: 60
-            periodSeconds: 30
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 8080
-            initialDelaySeconds: 60
-            periodSeconds: 30
-            successThreshold: 1
-            failureThreshold: 5
+      - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index-rolling:v8.0
+        name: was-sign
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: 256Mi
+            cpu: 200m
+          limits:
+            memory: 256Mi
+            cpu: 200m
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 30 
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 60 
+          periodSeconds: 30 
+          successThreshold: 1 
+          failureThreshold: 5 
 
 ---
 
@@ -136,36 +156,46 @@ spec:
       labels:
         app: login-app
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - login-app
+            topologyKey: "kubernetes.io/hostname"
       topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: "kubernetes.io/hostname"
-          whenUnsatisfiable: "DoNotSchedule"
-          labelSelector:
-            matchLabels:
-              app: login-app
+      - maxSkew: 1
+        topologyKey: "kubernetes.io/hostname"
+        whenUnsatisfiable: "DoNotSchedule"
+        labelSelector:
+          matchLabels:
+            app: login-app
       containers:
-        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index-rolling:v8.0
-          name: was-login
-          ports:
-            - containerPort: 8080
-          resources:
-            requests:
-              memory: 256Mi
-              cpu: 200m
-            limits:
-              memory: 256Mi
-              cpu: 200m
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 8080
-            initialDelaySeconds: 60
-            periodSeconds: 30
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 8080
-            initialDelaySeconds: 60
-            periodSeconds: 30
-            successThreshold: 1
-            failureThreshold: 5
+      - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index-rolling:v8.0
+        name: was-login
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: 256Mi
+            cpu: 200m
+          limits:
+            memory: 256Mi
+            cpu: 200m
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 30 
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 60 
+          periodSeconds: 30 
+          successThreshold: 1 
+          failureThreshold: 5 
