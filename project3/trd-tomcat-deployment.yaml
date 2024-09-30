@@ -20,16 +20,6 @@ spec:
       labels:
         app: index-app
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - index-app
-            topologyKey: "kubernetes.io/hostname"
       containers:
       - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index:v5.0
         name: was-main
@@ -81,16 +71,6 @@ spec:
       labels:
         app: sign-app
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - sign-app
-            topologyKey: "kubernetes.io/hostname"
       containers:
       - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index:v5.0
         name: was-sign
@@ -142,16 +122,6 @@ spec:
       labels:
         app: login-app
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - login-app
-            topologyKey: "kubernetes.io/hostname"
       containers:
       - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index:v5.0
         name: was-login
