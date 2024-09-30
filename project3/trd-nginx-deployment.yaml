@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: was-main
-  namespace: backend
+  name: nginx-index
+  namespace: frontend
   labels:
     app: index-app
 spec:
@@ -13,47 +13,62 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: 2
-      maxSurge: 0
+      maxUnavailable: 25%
+      maxSurge: 25%
   template:
     metadata:
       labels:
         app: index-app
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - index-app
+              topologyKey: "kubernetes.io/hostname"
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: "kubernetes.io/hostname"
+          whenUnsatisfiable: "ScheduleAnyway"
+          labelSelector:
+            matchLabels:
+              app: index-app
       containers:
-      - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index-rolling:v10.0
-        name: was-main
-        ports:
-        - containerPort: 8080
-        resources:
-          requests:
-            memory: 256Mi
-            cpu: 200m
-          limits:
-            memory: 256Mi
-            cpu: 200m
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds: 60
-          periodSeconds: 30 
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds: 60 
-          periodSeconds: 30 
-          successThreshold: 1 
-          failureThreshold: 5 
-
+        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-index:v5.0
+          name: trd-index
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 128Mi
+              cpu: 100m
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 5
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: was-sign
-  namespace: backend
+  name: nginx-sign
+  namespace: frontend
   labels:
     app: sign-app
 spec:
@@ -64,47 +79,62 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: 2
-      maxSurge: 0
+      maxUnavailable: 25%
+      maxSurge: 25%
   template:
     metadata:
       labels:
         app: sign-app
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - sign-app
+              topologyKey: "kubernetes.io/hostname"
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: "kubernetes.io/hostname"
+          whenUnsatisfiable: "DoNotSchedule"
+          labelSelector:
+            matchLabels:
+              app: sign-app
       containers:
-      - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index-rolling:v10.0
-        name: was-sign
-        ports:
-        - containerPort: 8080
-        resources:
-          requests:
-            memory: 256Mi
-            cpu: 200m
-          limits:
-            memory: 256Mi
-            cpu: 200m
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds: 60
-          periodSeconds: 30 
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds: 60 
-          periodSeconds: 30 
-          successThreshold: 1 
-          failureThreshold: 5 
-
+        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-signup:v5.0
+          name: nginx-sign
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 128Mi
+              cpu: 100m
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 5
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: was-login
-  namespace: backend
+  name: nginx-login
+  namespace: frontend
   labels:
     app: login-app
 spec:
@@ -115,36 +145,53 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: 2
-      maxSurge: 0
+      maxUnavailable: 25%
+      maxSurge: 25%
   template:
     metadata:
       labels:
         app: login-app
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - login-app
+              topologyKey: "kubernetes.io/hostname"
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: "kubernetes.io/hostname"
+          whenUnsatisfiable: "DoNotSchedule"
+          labelSelector:
+            matchLabels:
+              app: login-app
       containers:
-      - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat-index-rolling:v10.0
-        name: was-login
-        ports:
-        - containerPort: 8080
-        resources:
-          requests:
-            memory: 256Mi
-            cpu: 200m
-          limits:
-            memory: 256Mi
-            cpu: 200m
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds: 60
-          periodSeconds: 30 
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds: 60 
-          periodSeconds: 30 
-          successThreshold: 1 
-          failureThreshold: 5 
+        - image: 784849575779.dkr.ecr.ap-northeast-2.amazonaws.com/nginx-login:v5.0
+          name: nginx-login
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: 256Mi
+              cpu: 200m
+            limits:
+              memory: 256Mi
+              cpu: 200m
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 5
